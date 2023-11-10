@@ -23,7 +23,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', loginData);
+            const response = await axios.post('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/auth/login', loginData);
             navigate("/profile")
             toast.success('Đăng nhập thành công!');
             setLoggedIn(true);

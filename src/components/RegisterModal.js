@@ -23,7 +23,7 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
         e.preventDefault(); // Ngăn trang web reload
         try {
             // Gửi dữ liệu đến endpoint đăng ký của backend
-            const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const response = await axios.post('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/auth/register', formData);
             toast.success('Đăng ký thành công!');
             console.log(response.data);
             closeModal(); // Đóng modal sau khi đăng ký thành công
