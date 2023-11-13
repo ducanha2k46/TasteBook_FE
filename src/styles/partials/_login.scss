@@ -7,16 +7,17 @@
     padding: 2rem;
     box-shadow: 0 2px 6px var(--shadow-color);
     background-color: var(--background-color);
-    
     h2 {
         font-size: 1.75em;
         color: var(--primary-color);
         text-align: center;
         margin-bottom: 1.5rem;
     }
+
     .input-group {
         margin-bottom: 1.5rem;
         font-size: 16px;
+
         label {
             display: block;
             margin-bottom: 0.5rem;
@@ -63,6 +64,10 @@
         color: white;
         margin-top: 2rem;
     }
+
+    .forget-text {
+        color: var(--text-color);
+    }
 }
 
 .modal {
@@ -86,12 +91,13 @@
     border-radius: 10px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    margin-top: 3rem; 
+    margin-top: 3rem;
 }
 
 .modal-title {
     font-size: 1.75em;
     padding-bottom: 1em;
+    color: var(--text-color);
 }
 
 .close-btn {
@@ -120,7 +126,7 @@
 }
 
 .cancel-btn {
-    background-color: var(--danger-color);
+    background-color: #f44336;
     color: var(--text-color);
 }
 
