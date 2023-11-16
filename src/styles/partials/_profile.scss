@@ -42,8 +42,8 @@
 
   .profile-avatar {
     .avatar-image {
-      width: 200px;
-      height: 200px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
       margin-right: 20px;
@@ -59,6 +59,9 @@
   margin-right: 15px;
 }
 
+.logout {
+  margin-top: 25px;
+}
 .modal {
   position: fixed;
   z-index: 1;

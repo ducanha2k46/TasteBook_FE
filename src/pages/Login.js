@@ -27,6 +27,7 @@ export default function Login() {
             navigate("/profile")
             toast.success('Đăng nhập thành công!');
             setLoggedIn(true);
+            localStorage.setItem('userToken', response.data.token);
             console.log(response.data);
         } catch (error) {
             toast.error(error.response ? error.response.data.message : 'Đăng nhập thất bại, lỗi không xác định');
