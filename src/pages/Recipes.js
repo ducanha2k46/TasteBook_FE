@@ -12,7 +12,7 @@ export default function Recipes() {
     });
     
     useEffect(() => {
-        axios.get('http://localhost:5000/api/recipes/random') // Adjust the URL as needed
+        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/random') // Adjust the URL as needed
             .then(response => {
                 setRecipes(response.data);
             })
@@ -21,7 +21,7 @@ export default function Recipes() {
             });
     }, []);
     const handleSearch = (query) => {
-        axios.get(`http://localhost:5000/api/recipes/search/${query}`)
+        axios.get(`https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/search/${query}`)
             .then(response => {
                 setRecipes(response.data);
                 updateSearchHistory(query);

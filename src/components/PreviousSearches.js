@@ -9,7 +9,7 @@ export default function PreviousSearches({ onSearch, searches }) {
 
     useEffect(() => {
         if (searchTerm) {
-            axios.get(`http://localhost:5000/api/recipes/suggest/${searchTerm}`)
+            axios.get(`https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/suggest/${searchTerm}`)
                 .then(response => setSuggestions(response.data))
                 .catch(error => console.error(error));
         } else {
