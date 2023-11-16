@@ -1,11 +1,13 @@
-.previous-searches{
+.previous-searches {
     display: block;
-    h2{
+
+    h2 {
         color: var(--text-color);
         margin-bottom: .5em;
     }
-    .previous-searches-container{
-        .search-item{
+
+    .previous-searches-container {
+        .search-item {
             background-color: var(--primary-color);
             display: inline-block;
             padding: .5em 1em;
@@ -18,26 +20,53 @@
             animation: getAnimationDuration(.5s) slideInRight forwards;
         }
     }
-    .search-box{
+
+    .search-box {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         //background-color: red;
         height: 40px;
-        input, .btn{
+        position: relative;
+
+        input,
+        .btn {
             height: 35px;
         }
-        input{
+
+        input {
             min-width: 250px;
             padding: 0 0.5em;
             border-radius: 5px 0 0 5px;
             outline: none;
             border: 1px solid #4d4d4d;
         }
-        .btn{
+
+        .btn {
             padding-block: 0;
             border-radius: 0 5px 5px 0;
             padding-inline: .75em;
+        }
+
+        .suggestions-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            .suggestion-item {
+                padding: 8px 12px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #f7f7f7;
+                }
+            }
         }
     }
 }

@@ -1,49 +1,52 @@
-import PreviousSearches from "../components/PreviousSearches"
-import RecipeCard from "../components/RecipesCard"
+import React, { useState, useEffect } from 'react';
+import RecipeCard from "../components/RecipesCard";
+import PreviousSearches from "../components/PreviousSearches";
+import axios from 'axios'; // Ensure axios is installed
 
 export default function Recipes() {
-    const recipes = [
-        {
-            title: "Chick Jett 1",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        },
-        {
-            title: "Chick Jett 2",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        },
-        {
-            title: "Chick Jett 3",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        },
-        {
-            title: "Chick Jett 4",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        },
-        {
-            title: "Chick Jett 5",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        },
-        {
-            title: "Chick Jett 6",
-            image: "img/gallery/img_1.jpg",
-            authorImg: "img/gallery/img_1.jpg",
-        }
-    ].sort(() => Math.random() - 0.5)
+    const [recipes, setRecipes] = useState([]);
+    const [searchHistory, setSearchHistory] = useState(() => {
+        // Try to get the existing search history from local storage
+        const savedHistory = localStorage.getItem('searchHistory');
+        return savedHistory ? JSON.parse(savedHistory) : [];
+    });
+    
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/recipes/random') // Adjust the URL as needed
+            .then(response => {
+                setRecipes(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
+    const handleSearch = (query) => {
+        axios.get(`http://localhost:5000/api/recipes/search/${query}`)
+            .then(response => {
+                setRecipes(response.data);
+                updateSearchHistory(query);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
 
+    const updateSearchHistory = (query) => {
+        setSearchHistory(prevHistory => {
+            const newHistory = [query, ...prevHistory].slice(0, 10); // Keep only the last 10 searches
+            localStorage.setItem('searchHistory', JSON.stringify(newHistory)); // Save to local storage
+            return newHistory;
+        });
+    };
+    
     return (
         <div>
-            <PreviousSearches />
+            <PreviousSearches searches={searchHistory} onSearch={handleSearch} />
             <div className="recipes-container">
-                {/* <RecipeCard /> */}
                 {recipes.map((recipe, index) => (
                     <RecipeCard key={index} recipe={recipe} />
                 ))}
             </div>
         </div>
-    )
+    );
 }
