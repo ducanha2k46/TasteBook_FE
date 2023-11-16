@@ -1,7 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import ImproveSkills from "../components/ImproveSkills";
 import QuoteSection from "../components/QuoteSection";
-import ChiefsSection from "../components/ChiefsSection";
 
 export default function Home() {
     return (
@@ -9,7 +8,6 @@ export default function Home() {
             <HeroSection />
             <ImproveSkills />
             <QuoteSection />
-            <ChiefsSection />
         </div>
     )
 }

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'; // Ensure axios is installed
 
-export default function PreviousSearches({ onSearch, searches }) {
+export default function PreviousSearches({ onSearch, searches, onDelete }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
@@ -38,13 +39,18 @@ export default function PreviousSearches({ onSearch, searches }) {
             <h2>Lịch sử tìm kiếm</h2>
             <div className="previous-searches-container">
                 {searches.map((search, index) => (
-                    <div key={index}
-                        className="search-item"
-                        onClick={() => handleSuggestionClick(search)}>
-                        {search}
+                    <div key={index} className="search-item">
+                        <div onClick={() => handleSuggestionClick(search)}>
+                            {search}
+                        </div>
+                        <div className="delete-icon" onClick={() => onDelete(search)}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </div>
                     </div>
                 ))}
+
             </div>
+
             <div className="search-box">
                 <input type="text"
                     placeholder="Search ..."

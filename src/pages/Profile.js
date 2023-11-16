@@ -45,8 +45,7 @@ export default function Profile() {
                         <p className='info'><strong>Tiểu sử:</strong>Không có gì</p>
                     </div>
                     <div className="profile-avatar ">
-                        {/* Avatar should be editable on click */}
-                        <img src="img/gallery/img_1.jpg" alt="Avatar" className="avatar-image" />
+                        <img src="https://www.gravatar.com/avatar/?d=mp" alt="Avatar" className="avatar-image" />
                     </div>
                 </div>
                 <div className="profile-actions">
@@ -80,27 +79,27 @@ export default function Profile() {
                 <div className="modal">
                     <div className="modal-content">
                         <span className="close" onClick={toggleChangePasswordModal}>&times;</span>
-                        <h2>Change Password</h2>
+                        <h2>Đổi mật khẩu</h2>
                         <form onSubmit={handleChangePasswordSubmit}>
                             {/* Password fields with toggleable visibility */}
                             <div className="password-input">
-                                <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Current Password" required />
+                                <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Mật khẩu hiện tại" required />
                                 <i onClick={toggleCurrentPasswordVisibility}>{showCurrentPassword ? <FaEyeSlash /> : <FaEye />}</i>
                             </div>
 
 
                             <div className="password-input">
-                                <input type={showNewPassword ? 'text' : 'password'} placeholder="New Password" required />
+                                <input type={showNewPassword ? 'text' : 'password'} placeholder="Mật khẩu mới" required />
                                 <i onClick={toggleNewPasswordVisibility}>{showNewPassword ? <FaEyeSlash /> : <FaEye />}</i>
                             </div>
 
 
                             <div className="password-input">
-                                <input type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm New Password" required />
+                                <input type={showConfirmPassword ? 'text' : 'password'} placeholder="Nhập lại mật khẩu mới" required />
                                 <i onClick={toggleConfirmPasswordVisibility}>{showConfirmPassword ? <FaEyeSlash /> : <FaEye />}</i>
                             </div>
 
-                            <button type="submit" className="btn">Submit</button>
+                            <button type="submit" className="btn">Xác nhận</button>
                         </form>
                     </div>
                 </div>

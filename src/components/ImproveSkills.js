@@ -3,12 +3,12 @@ import { useAuth } from "../AuthContext"
 
 export default function ImproveSkills() {
     const list = [
-        "champions",
-        "champions",
-        "champions",
-        "champions",
-        "champions",
-        "champions"
+        "Học Cách Nấu Ăn Mới",
+        "Cộng Đồng Đam Mê Nấu Ăn",
+        "Lưu Trữ Công Thức Cá Nhân",
+        "Cập Nhật Xu Hướng Mới",
+        "Tìm Kiếm Công Thức Dễ Dàng",
+        "Cải thiện Kỹ Năng Nấu Ăn"
     ];
     const { isLoggedIn } = useAuth();
 

@@ -6,13 +6,12 @@ import axios from 'axios'; // Ensure axios is installed
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const [searchHistory, setSearchHistory] = useState(() => {
-        // Try to get the existing search history from local storage
         const savedHistory = localStorage.getItem('searchHistory');
         return savedHistory ? JSON.parse(savedHistory) : [];
     });
-    
+
     useEffect(() => {
-        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/random') // Adjust the URL as needed
+        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/random')
             .then(response => {
                 setRecipes(response.data);
             })
@@ -33,15 +32,28 @@ export default function Recipes() {
 
     const updateSearchHistory = (query) => {
         setSearchHistory(prevHistory => {
-            const newHistory = [query, ...prevHistory].slice(0, 10); // Keep only the last 10 searches
-            localStorage.setItem('searchHistory', JSON.stringify(newHistory)); // Save to local storage
+            // Remove the query if it already exists in the history
+            const filteredHistory = prevHistory.filter(item => item !== query);
+    
+            // Add the query to the top of the history, keeping the history limited to 10 items
+            const newHistory = [query, ...filteredHistory].slice(0, 10);
+    
+            // Update localStorage
+            localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+    
             return newHistory;
         });
     };
-    
+    const handleDeleteSearchItem = (itemToDelete) => {
+        setSearchHistory(currentHistory => {
+            const updatedHistory = currentHistory.filter(item => item !== itemToDelete);
+            localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+            return updatedHistory;
+        });
+    };
     return (
         <div>
-            <PreviousSearches searches={searchHistory} onSearch={handleSearch} />
+            <PreviousSearches searches={searchHistory} onSearch={handleSearch} onDelete={handleDeleteSearchItem} />
             <div className="recipes-container">
                 {recipes.map((recipe, index) => (
                     <RecipeCard key={index} recipe={recipe} />
