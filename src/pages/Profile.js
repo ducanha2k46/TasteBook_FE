@@ -105,7 +105,7 @@ export default function Profile() {
                     <button className="btn danger">Xóa tài khoản</button>
                 </div>
             </div>
-            <button className="btn logout" onClick={() => {navigate("/profile"); setLoggedIn(false);}}>Đăng xuất</button>
+            <button className="btn logout" onClick={() => {navigate("/login"); setLoggedIn(false);}}>Đăng xuất</button>
             {/* The Change Password Modal */}
             {isChangePasswordModalOpen && (
                 <div className="modal">
