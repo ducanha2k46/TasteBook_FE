@@ -54,7 +54,7 @@ export default function Profile() {
         // Replace with actual token retrieval method
         const token = localStorage.getItem('userToken');
 
-        axios.get('http://localhost:5000/api/auth/profile', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/auth/profile', { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setProfile(response.data);
             })
