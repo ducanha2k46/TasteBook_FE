@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function RegisterModal({ isModalOpen, closeModal }) {
     // State cho mỗi trường input
@@ -23,7 +24,7 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
         e.preventDefault(); // Ngăn trang web reload
         try {
             // Gửi dữ liệu đến endpoint đăng ký của backend
-            const response = await axios.post('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/auth/register', formData);
+            const response = await axios.post(`${apiUrl}/api/auth/register`, formData);
             toast.success('Đăng ký thành công!');
             console.log(response.data);
             closeModal(); // Đóng modal sau khi đăng ký thành công

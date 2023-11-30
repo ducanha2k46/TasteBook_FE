@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../AuthContext';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
@@ -54,7 +55,7 @@ export default function Profile() {
         // Replace with actual token retrieval method
         const token = localStorage.getItem('userToken');
 
-        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/auth/profile', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${apiUrl}/api/auth/profile`, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
                 setProfile(response.data);
             })
@@ -63,7 +64,34 @@ export default function Profile() {
             });
     }, []);
     const formattedBirthDate = new Date(profile.birthDate).toLocaleDateString();
+    const [avatar, setAvatar] = useState('');
 
+    const handleAvatarChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const uploadResponse = await axios.post(`${apiUrl}/api/uploads`, formData);
+                if (uploadResponse.data.success) {
+                    const avatarUrl = uploadResponse.data.avatarUrl;
+
+                    // Lấy token từ localStorage
+                    const token = localStorage.getItem('userToken'); // Thay 'userToken' bằng key bạn dùng để lưu token
+
+                    // Gửi yêu cầu cập nhật avatar
+                    await axios.post(`${apiUrl}/api/user/updateAvatar`, { avatarUrl }, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    setAvatar(avatarUrl);
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
+    };
     return (
         <div>
             <div className="profile-container ">
@@ -76,7 +104,19 @@ export default function Profile() {
                         <p className='info'><strong>Tiểu sử:</strong> {profile.biography}</p>
                     </div>
                     <div className="profile-avatar ">
-                        <img src={profile.avatarImg || "https://www.gravatar.com/avatar/?d=identicon"} alt="Avatar" className="avatar-image" />
+                        <img
+                            src={avatar || profile.avatarUrl}
+                            alt="Avatar"
+                            onClick={() => document.getElementById('avatarInput').click()}
+                            style={{ width: '150px', height: '150px' }}
+                            className='avatar-image' // Điều chỉnh kích thước theo ý muốn
+                        />
+                        <input
+                            id="avatarInput"
+                            type="file"
+                            onChange={handleAvatarChange}
+                            style={{ display: 'none' }}
+                        />
                     </div>
                 </div>
                 <div className="profile-actions">
@@ -105,7 +145,7 @@ export default function Profile() {
                     <button className="btn danger">Xóa tài khoản</button>
                 </div>
             </div>
-            <button className="btn logout" onClick={() => {navigate("/login"); setLoggedIn(false);}}>Đăng xuất</button>
+            <button className="btn logout" onClick={() => { navigate("/login"); setLoggedIn(false); }}>Đăng xuất</button>
             {/* The Change Password Modal */}
             {isChangePasswordModalOpen && (
                 <div className="modal">

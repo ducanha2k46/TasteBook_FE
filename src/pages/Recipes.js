@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeCard from "../components/RecipesCard";
 import PreviousSearches from "../components/PreviousSearches";
 import axios from 'axios'; // Ensure axios is installed
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
@@ -11,7 +12,7 @@ export default function Recipes() {
     });
 
     useEffect(() => {
-        axios.get('https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/random')
+        axios.get(`${apiUrl}/api/recipes/random`)
             .then(response => {
                 setRecipes(response.data);
             })
@@ -20,7 +21,7 @@ export default function Recipes() {
             });
     }, []);
     const handleSearch = (query) => {
-        axios.get(`https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/search/${query}`)
+        axios.get(`${apiUrl}/api/recipes/search/${query}`)
             .then(response => {
                 setRecipes(response.data);
                 updateSearchHistory(query);

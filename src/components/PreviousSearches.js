@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'; // Ensure axios is installed
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function PreviousSearches({ onSearch, searches, onDelete }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +11,7 @@ export default function PreviousSearches({ onSearch, searches, onDelete }) {
 
     useEffect(() => {
         if (searchTerm) {
-            axios.get(`https://tastebook-be-a3d04816b8fe.herokuapp.com/api/recipes/suggest/${searchTerm}`)
+            axios.get(`${apiUrl}/api/recipes/suggest/${searchTerm}`)
                 .then(response => setSuggestions(response.data))
                 .catch(error => console.error(error));
         } else {
