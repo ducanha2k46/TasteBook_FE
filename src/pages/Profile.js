@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../AuthContext';
+import { toast } from 'react-toastify';
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
@@ -12,15 +14,6 @@ export default function Profile() {
     const toggleChangePasswordModal = () => {
         setIsChangePasswordModalOpen(!isChangePasswordModalOpen);
     };
-
-    const handleChangePasswordSubmit = (event) => {
-        event.preventDefault();
-        // Password change logic here
-        console.log("Password change submitted");
-        toggleChangePasswordModal();
-    };
-
-    // Toggle the type of password input field
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -92,6 +85,43 @@ export default function Profile() {
             }
         }
     };
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const handleChangePasswordSubmit = async (event) => {
+        event.preventDefault();
+        const authToken = localStorage.getItem('userToken');
+
+        // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
+        if (newPassword !== confirmPassword) {
+            toast.error ("Mật khẩu xác nhận sai");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/api/auth/change-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}` 
+                },
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Password successfully changed');
+                toast.success('Đổi mật khẩu thành công');
+                // Thêm xử lý thành công ở đây (ví dụ: đóng modal)
+            } else {
+                console.log('Failed to change password:', data.message);
+                toast.error('Thay đổi thất bại');
+            }
+        } catch (error) {
+            console.error(error.response ? error.response.data : error);
+            toast.error(error.response ? error.response.data.message : 'Lỗi không xác định');
+        }
+    };
     return (
         <div>
             <div className="profile-container ">
@@ -153,22 +183,43 @@ export default function Profile() {
                         <span className="close" onClick={toggleChangePasswordModal}>&times;</span>
                         <h2>Đổi mật khẩu</h2>
                         <form onSubmit={handleChangePasswordSubmit}>
-                            {/* Password fields with toggleable visibility */}
                             <div className="password-input">
-                                <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Mật khẩu hiện tại" required />
-                                <i onClick={toggleCurrentPasswordVisibility}>{showCurrentPassword ? <FaEyeSlash /> : <FaEye />}</i>
+                                <input
+                                    type={showCurrentPassword ? 'text' : 'password'}
+                                    placeholder="Mật khẩu hiện tại"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    required
+                                />
+                                <i onClick={toggleCurrentPasswordVisibility}>
+                                    {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
+                                </i>
                             </div>
 
-
                             <div className="password-input">
-                                <input type={showNewPassword ? 'text' : 'password'} placeholder="Mật khẩu mới" required />
-                                <i onClick={toggleNewPasswordVisibility}>{showNewPassword ? <FaEyeSlash /> : <FaEye />}</i>
+                                <input
+                                    type={showNewPassword ? 'text' : 'password'}
+                                    placeholder="Mật khẩu mới"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required
+                                />
+                                <i onClick={toggleNewPasswordVisibility}>
+                                    {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                                </i>
                             </div>
 
-
                             <div className="password-input">
-                                <input type={showConfirmPassword ? 'text' : 'password'} placeholder="Nhập lại mật khẩu mới" required />
-                                <i onClick={toggleConfirmPasswordVisibility}>{showConfirmPassword ? <FaEyeSlash /> : <FaEye />}</i>
+                                <input
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    placeholder="Nhập lại mật khẩu mới"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                />
+                                <i onClick={toggleConfirmPasswordVisibility}>
+                                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                </i>
                             </div>
 
                             <button type="submit" className="btn">Xác nhận</button>
