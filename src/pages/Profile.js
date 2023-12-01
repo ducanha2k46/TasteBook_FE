@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from '../AuthContext';
 import { toast } from 'react-toastify';
 
+    // State for delete account modal visibility
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
@@ -13,6 +15,11 @@ export default function Profile() {
     // State for password visibility
     const toggleChangePasswordModal = () => {
         setIsChangePasswordModalOpen(!isChangePasswordModalOpen);
+        if (!isChangePasswordModalOpen) {
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        }
     };
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -45,7 +52,6 @@ export default function Profile() {
     });
 
     useEffect(() => {
-        // Replace with actual token retrieval method
         const token = localStorage.getItem('userToken');
 
         axios.get(`${apiUrl}/api/auth/profile`, { headers: { Authorization: `Bearer ${token}` } })
@@ -94,7 +100,7 @@ export default function Profile() {
 
         // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
         if (newPassword !== confirmPassword) {
-            toast.error ("Mật khẩu xác nhận sai");
+            toast.error("Mật khẩu xác nhận sai");
             return;
         }
 
@@ -103,7 +109,7 @@ export default function Profile() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}` 
+                    'Authorization': `Bearer ${authToken}`
                 },
                 body: JSON.stringify({ currentPassword, newPassword })
             });
@@ -112,16 +118,54 @@ export default function Profile() {
             if (response.ok) {
                 console.log('Password successfully changed');
                 toast.success('Đổi mật khẩu thành công');
+                setCurrentPassword('');
+                setNewPassword('');
+                setConfirmPassword('');
+                toggleChangePasswordModal();
                 // Thêm xử lý thành công ở đây (ví dụ: đóng modal)
             } else {
                 console.log('Failed to change password:', data.message);
-                toast.error('Thay đổi thất bại');
+                toast.error(data.message);
             }
         } catch (error) {
             console.error(error.response ? error.response.data : error);
             toast.error(error.response ? error.response.data.message : 'Lỗi không xác định');
         }
     };
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [password, setPassword] = useState('');
+
+    const openDeleteModal = () => setIsDeleteModalOpen(true);
+    const closeDeleteModal = () => setIsDeleteModalOpen(false);
+
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const response = await axios.delete(`${apiUrl}/api/auth/delete-account`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                },
+                data: { password: password } 
+            });
+    
+            if (response && response.data) {
+                console.log(response.data.message);
+                toast.success(response.data.message)
+                navigate("/login"); 
+                setLoggedIn(false);
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                console.error('Error deleting account:', error.response.data.message);
+                toast.error(error.message)
+            } else {
+                console.error('Error deleting account:', error.message);
+            }
+        }
+    };
+    
+
     return (
         <div>
             <div className="profile-container ">
@@ -139,7 +183,7 @@ export default function Profile() {
                             alt="Avatar"
                             onClick={() => document.getElementById('avatarInput').click()}
                             style={{ width: '150px', height: '150px' }}
-                            className='avatar-image' // Điều chỉnh kích thước theo ý muốn
+                            className='avatar-image' 
                         />
                         <input
                             id="avatarInput"
@@ -172,11 +216,32 @@ export default function Profile() {
                 <div className="account-management ">
                     <h2 className='title'>Quản lý tài khoản</h2>
                     <button className="btn" onClick={toggleChangePasswordModal}>Đổi mật khẩu</button>
-                    <button className="btn danger">Xóa tài khoản</button>
+
+                    <button onClick={openDeleteModal} className="btn danger">Xóa tài khoản</button>
+
                 </div>
             </div>
             <button className="btn logout" onClick={() => { navigate("/login"); setLoggedIn(false); }}>Đăng xuất</button>
-            {/* The Change Password Modal */}
+            {isDeleteModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeDeleteModal}>&times;</span>
+                        <h2>Xóa tài khoản</h2>
+                        <form onSubmit={handleDeleteAccount}>
+                            <div className="password-input">
+                                <input
+                                    type='password'
+                                    placeholder="Nhập mật khẩu của bạn"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="btn">Xác nhận</button>
+                        </form>
+                    </div>
+                </div>
+            )}
             {isChangePasswordModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
