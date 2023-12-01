@@ -68,6 +68,7 @@ img {
         height: 100%;
     }
 }
+
 @import "partials/profile.scss";
 @import "partials/login.scss";
 @import "partials/navbar.scss";
@@ -77,10 +78,12 @@ img {
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 3vw;
-    &.d-block{
+
+    &.d-block {
         display: block;
 
     }
+
     .title {
         color: var(--text-color);
         font-size: 2.5em;
@@ -108,8 +111,7 @@ img {
 @import "partials/previous-searches.scss";
 @import "partials/repices-section.scss";
 
-
-.option-container{
+.option-container {
     box-shadow: 0 5px 10px var(--shadow-color);
     padding: 1em;
     border-radius: 5px;
@@ -118,7 +120,8 @@ img {
     margin-top: 1em;
     display: flex;
     gap: 1em;
-    .option{
+
+    .option {
         height: 3.5em;
         width: 3.5em;
         box-shadow: 0 3px 6px var(--shadow-color);
@@ -126,13 +129,16 @@ img {
         display: flex;
         justify-content: center;
         align-items: center;
-        &.light{
+
+        &.light {
             background-color: #fff;
         }
-        &.dark{
+
+        &.dark {
             background-color: rgb(29, 29, 29);
         }
-        .check{
+
+        .check {
             height: 2.5em;
             width: 2.5em;
             background-color: var(--primary-color);
@@ -141,19 +147,21 @@ img {
             justify-content: center;
             align-items: center;
             box-shadow: 0 2px 5px var(--shadow-color);
-            svg{
+
+            svg {
                 height: 1.5em;
                 width: 1.5em;
             }
         }
     }
-    .btn span{
+
+    .btn span {
         display: inline-block;
         margin-left: .5em;
     }
 }
 
-.d-block h2{
+.d-block h2 {
     font-size: 1.75em;
     color: var(--text-color);
 }
@@ -168,7 +176,7 @@ img {
 .container {
     padding-inline: 25vw;
 }
-
+@import "partials/editprofile.scss";
 
 
 @import "partials/animation.scss";
@@ -195,23 +203,27 @@ img {
             display: block;
         }
     }
-    .section{
-        .col{
+
+    .section {
+        .col {
             width: 100%;
             padding: 0 !important;
             text-align: center;
             margin-bottom: 2em;
         }
     }
-    .skill-item{
+
+    .skill-item {
         display: inline-block;
         margin: .75em;
     }
-    .section.improve-skills.btn{
+
+    .section.improve-skills.btn {
         display: block;
         margin-left: 50%;
         transform: translateX(-50%);
     }
+
     .chief-card {
         box-shadow: 0 5px 10px var(--shadow-color);
     }
@@ -219,12 +231,16 @@ img {
     .container {
         padding-inline: 6vw;
     }
-    .footer{
+
+    .footer {
         grid-template-columns: repeat(4, 1fr);
-        .footer-section:nth-child(1){
+
+        .footer-section:nth-child(1) {
             grid-column: span 4;
         }
-        .footer-section:nth-child(2), .footer-section:nth-child(3){
+
+        .footer-section:nth-child(2),
+        .footer-section:nth-child(3) {
             grid-column: span 2;
         }
     }
@@ -235,4 +251,3 @@ img {
         padding-inline: 3vw;
     }
 }
-

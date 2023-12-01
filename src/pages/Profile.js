@@ -1,18 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../AuthContext';
 import { toast } from 'react-toastify';
-
-    // State for delete account modal visibility
+import ChangePasswordModal from '../components/ChangePasswordModal';
+import DeleteAccountModal from '../components/DeleteAccountModal';
+import EditProfileModal from '../components/EditProfileModal';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
-    // State for password visibility
+
     const toggleChangePasswordModal = () => {
         setIsChangePasswordModalOpen(!isChangePasswordModalOpen);
         if (!isChangePasswordModalOpen) {
@@ -22,21 +22,6 @@ export default function Profile() {
         }
     };
 
-    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    const toggleCurrentPasswordVisibility = () => {
-        setShowCurrentPassword(!showCurrentPassword);
-    };
-
-    const toggleNewPasswordVisibility = () => {
-        setShowNewPassword(!showNewPassword);
-    };
-
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
     const navigate = useNavigate();
     const { setLoggedIn } = useAuth();
     const [profile, setProfile] = useState({
@@ -76,15 +61,13 @@ export default function Profile() {
                 if (uploadResponse.data.success) {
                     const avatarUrl = uploadResponse.data.avatarUrl;
 
-                    // Lấy token từ localStorage
-                    const token = localStorage.getItem('userToken'); // Thay 'userToken' bằng key bạn dùng để lưu token
-
-                    // Gửi yêu cầu cập nhật avatar
+                    const token = localStorage.getItem('userToken');
                     await axios.post(`${apiUrl}/api/user/updateAvatar`, { avatarUrl }, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
 
                     setAvatar(avatarUrl);
+                    toast.success("Cập nhật ảnh đại diện thành công.")
                 }
             } catch (error) {
                 console.error('Error uploading file:', error);
@@ -98,7 +81,6 @@ export default function Profile() {
         event.preventDefault();
         const authToken = localStorage.getItem('userToken');
 
-        // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
         if (newPassword !== confirmPassword) {
             toast.error("Mật khẩu xác nhận sai");
             return;
@@ -122,7 +104,6 @@ export default function Profile() {
                 setNewPassword('');
                 setConfirmPassword('');
                 toggleChangePasswordModal();
-                // Thêm xử lý thành công ở đây (ví dụ: đóng modal)
             } else {
                 console.log('Failed to change password:', data.message);
                 toast.error(data.message);
@@ -140,19 +121,19 @@ export default function Profile() {
 
     const handleDeleteAccount = async (e) => {
         e.preventDefault();
-    
+
         try {
             const response = await axios.delete(`${apiUrl}/api/auth/delete-account`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('userToken')}`
                 },
-                data: { password: password } 
+                data: { password: password }
             });
-    
+
             if (response && response.data) {
                 console.log(response.data.message);
                 toast.success(response.data.message)
-                navigate("/login"); 
+                navigate("/login");
                 setLoggedIn(false);
             }
         } catch (error) {
@@ -164,7 +145,9 @@ export default function Profile() {
             }
         }
     };
-    
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const updateProfile = (updatedProfile) => {
+    };
 
     return (
         <div>
@@ -183,7 +166,7 @@ export default function Profile() {
                             alt="Avatar"
                             onClick={() => document.getElementById('avatarInput').click()}
                             style={{ width: '150px', height: '150px' }}
-                            className='avatar-image' 
+                            className='avatar-image'
                         />
                         <input
                             id="avatarInput"
@@ -194,17 +177,20 @@ export default function Profile() {
                     </div>
                 </div>
                 <div className="profile-actions">
-                    <button className="btn">Chỉnh sửa</button>
+                    <button className="btn" onClick={() => setEditModalOpen(true)}>Chỉnh sửa</button>
                 </div>
             </div>
+            <EditProfileModal
+                isOpen={isEditModalOpen}
+                onClose={() => setEditModalOpen(false)}
+                profile={profile}
+                updateProfile={updateProfile}
+            />
+
             <div className='profile-container'>
                 <div className="profile-cooking-info">
                     <div>
                         <h2 className='title'>Thông tin nấu ăn</h2>
-                    </div>
-                    <div className="posted-recipes">
-                        <h4>Công thức đã đăng</h4>
-                        {/* List of recipes user has posted */}
                     </div>
                     <div className="saved-recipes">
                         <h4>Công thức đã lưu</h4>
@@ -222,76 +208,25 @@ export default function Profile() {
                 </div>
             </div>
             <button className="btn logout" onClick={() => { navigate("/login"); setLoggedIn(false); }}>Đăng xuất</button>
-            {isDeleteModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeDeleteModal}>&times;</span>
-                        <h2>Xóa tài khoản</h2>
-                        <form onSubmit={handleDeleteAccount}>
-                            <div className="password-input">
-                                <input
-                                    type='password'
-                                    placeholder="Nhập mật khẩu của bạn"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn">Xác nhận</button>
-                        </form>
-                    </div>
-                </div>
-            )}
-            {isChangePasswordModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={toggleChangePasswordModal}>&times;</span>
-                        <h2>Đổi mật khẩu</h2>
-                        <form onSubmit={handleChangePasswordSubmit}>
-                            <div className="password-input">
-                                <input
-                                    type={showCurrentPassword ? 'text' : 'password'}
-                                    placeholder="Mật khẩu hiện tại"
-                                    value={currentPassword}
-                                    onChange={(e) => setCurrentPassword(e.target.value)}
-                                    required
-                                />
-                                <i onClick={toggleCurrentPasswordVisibility}>
-                                    {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
-                                </i>
-                            </div>
+            <ChangePasswordModal
+                isChangePasswordModalOpen={isChangePasswordModalOpen}
+                toggleChangePasswordModal={toggleChangePasswordModal}
+                currentPassword={currentPassword}
+                setCurrentPassword={setCurrentPassword}
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                confirmPassword={confirmPassword}
+                setConfirmPassword={setConfirmPassword}
+                handleChangePasswordSubmit={handleChangePasswordSubmit}
+            />
+            <DeleteAccountModal
+                isDeleteModalOpen={isDeleteModalOpen}
+                closeDeleteModal={closeDeleteModal}
+                password={password}
+                setPassword={setPassword}
+                handleDeleteAccount={handleDeleteAccount}
+            />
 
-                            <div className="password-input">
-                                <input
-                                    type={showNewPassword ? 'text' : 'password'}
-                                    placeholder="Mật khẩu mới"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    required
-                                />
-                                <i onClick={toggleNewPasswordVisibility}>
-                                    {showNewPassword ? <FaEyeSlash /> : <FaEye />}
-                                </i>
-                            </div>
-
-                            <div className="password-input">
-                                <input
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    placeholder="Nhập lại mật khẩu mới"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    required
-                                />
-                                <i onClick={toggleConfirmPasswordVisibility}>
-                                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                                </i>
-                            </div>
-
-                            <button type="submit" className="btn">Xác nhận</button>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
