@@ -110,7 +110,7 @@ img {
 @import "partials/quote-section.scss";
 @import "partials/previous-searches.scss";
 @import "partials/repices-section.scss";
-
+@import "partials/editprofile.scss";
 .option-container {
     box-shadow: 0 5px 10px var(--shadow-color);
     padding: 1em;
@@ -176,7 +176,7 @@ img {
 .container {
     padding-inline: 25vw;
 }
-@import "partials/editprofile.scss";
+
 
 
 @import "partials/animation.scss";

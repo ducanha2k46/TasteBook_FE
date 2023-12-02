@@ -156,6 +156,8 @@ export default function Profile() {
                     <div className="profile-details ">
                         <h2 className='title'>Hồ sơ</h2>
                         <p className='info'><strong>Biệt danh:</strong> {profile.nickname}</p>
+                        <p className='info'><strong>Họ và tên:</strong> {profile.lastName} {profile.firstName}</p>
+                        <p className='info'><strong>Giới tính:</strong> {profile.gender}</p>
                         <p className='info'><strong>Ngày sinh:</strong> {formattedBirthDate}</p>
                         <p className='info'><strong>Email:</strong> {profile.email}</p>
                         <p className='info'><strong>Tiểu sử:</strong> {profile.biography}</p>

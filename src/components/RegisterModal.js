@@ -45,9 +45,9 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
                     <div className="input-group">
                         <input
                             type="text"
-                            name="firstName"
+                            name="lastName"
                             placeholder="Họ"
-                            value={formData.firstName}
+                            value={formData.lastName}
                             onChange={handleChange}
                             required
                         />
@@ -55,9 +55,9 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
                     <div className="input-group">
                         <input
                             type="text"
-                            name="lastName"
+                            name="firstName"
                             placeholder="Tên"
-                            value={formData.lastName}
+                            value={formData.firstName}
                             onChange={handleChange}
                             required
                         />
@@ -100,9 +100,9 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
                             required
                         >
                             <option value="">Giới tính</option>
-                            <option value="male">Nam</option>
-                            <option value="female">Nữ</option>
-                            <option value="other">Khác</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
                         </select>
                     </div>
                     <button type="submit" className="btn">Đăng ký</button>

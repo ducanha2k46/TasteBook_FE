@@ -1,10 +1,31 @@
 .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
     .modal-content {
+        position: relative;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px var(--shadow-color);
+        transform: translateY(30px);
+        /* Di chuyển lên trên 50px */
+
         label {
             color: var(--text-color);
             font-size: 1em;
             margin-bottom: .25em;
             font-weight: 700;
+            margin-right: .25em;
         }
 
         input {
@@ -28,6 +49,31 @@
             border: 1px solid var(--shadow-color);
             border-radius: 5px;
         }
+
+        select {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid var(--shadow-color);
+            border-radius: 5px; 
+            background-color: var(--background-color); 
+            color: var(--text-color); 
+            font-size: 1em;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); 
+            appearance: none; 
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20viewBox="0%200%20400%20240"%20xmlns="http://www.w3.org/2000/svg"><path%20fill="%23666"%20d="M200%2060L0%20240h400z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%;
+            background-size: 0.65em auto;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: whitesmoke; 
+            box-shadow: 0 0 0 0.2rem var(--shadow-color); 
+        }
+
 
     }
 }
