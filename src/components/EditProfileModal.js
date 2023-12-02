@@ -95,7 +95,7 @@ const EditProfileModal = ({ isOpen, onClose, profile }) => {
           </div>
 
           <div className="modal-actions">
-            <button className='btn' type="submit" disabled={!nickname || !email || !birthDate}>Lưu thay đổi</button>
+            <button className='btn' type="submit" >Lưu thay đổi</button>
             <button className='btn' type="button" onClick={onClose}>Hủy</button>
           </div>
         </form>

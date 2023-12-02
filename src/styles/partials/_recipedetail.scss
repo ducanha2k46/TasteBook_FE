@@ -1,0 +1,97 @@
+
+.recipe-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+
+    .recipe-image-container {
+        text-align: center; 
+
+        .recipe-image {
+            max-width: 300px; 
+            height: auto;
+        }
+
+        .recipe-buttons {
+            margin-top: 10px; 
+        }
+    }
+
+    .recipe-content {
+        flex-basis: 60%;
+
+        .recipe-title {
+            font-size: 1.75em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .recipe-description,
+        .recipe-author,
+        .recipe-difficulty,
+        .recipe-preparation-time,
+        .recipe-cooking-time {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: var(--text-light);
+
+            strong {
+                color: var(--text-color);
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.recipe-ingredients {
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-size: 1.75em;
+        color: var(--primary-color);
+    }
+
+    ul {
+        list-style-type: none; // Xóa dấu bullet list
+        padding: 0; // Xóa padding mặc định
+
+        li {
+            color: var(--text-color);
+            padding: 5px 0; // Thêm padding cho mỗi mục
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); // Dòng kẻ mờ dưới mỗi mục
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            &:last-child {
+                border-bottom: none; // Xóa dòng kẻ cho mục cuối cùng
+            }
+        }
+    }
+}
+
+.recipe-method {
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-size: 1.75em;
+        color: var(--primary-color);
+    }
+
+    ol {
+        counter-reset: step-counter; // Khởi tạo counter
+        list-style-type: none; // Xóa style mặc định của danh sách
+        padding: 0;
+
+        li {
+            color: var(--text-color);
+            font-size: 16px;
+            counter-increment: step-counter; // Tăng counter mỗi bước
+            margin-bottom: 10px; // Khoảng cách giữa các bước
+            word-spacing: 1px;
+            &:before {
+                content: 'STEP ' counter(step-counter) '. '; // Tạo nội dung cho pseudo-element
+                font-weight: bold; // Đặt chữ đậm cho số bước
+            }
+        }
+    }
+}

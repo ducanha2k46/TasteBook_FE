@@ -111,6 +111,8 @@ img {
 @import "partials/previous-searches.scss";
 @import "partials/repices-section.scss";
 @import "partials/editprofile.scss";
+@import "partials/recipedetail.scss";
+
 .option-container {
     box-shadow: 0 5px 10px var(--shadow-color);
     padding: 1em;
@@ -249,5 +251,32 @@ img {
 @media screen and (max-width: 480) {
     .container {
         padding-inline: 3vw;
+    }
+}
+
+@media print {
+
+    .header,
+    .footer,
+    .navbar,
+    .recipe-buttons {
+        display: none;
+    }
+
+    .recipe-detail {
+        display: block; 
+
+        .recipe-image-container,
+        .recipe-content {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .recipe-image {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px; 
+        }
+
     }
 }
