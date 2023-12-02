@@ -1,20 +1,24 @@
-
 .recipe-detail {
     display: flex;
     align-items: flex-start;
     gap: 20px;
 
     .recipe-image-container {
-        text-align: center; 
+        text-align: center;
 
         .recipe-image {
-            max-width: 300px; 
+            max-width: 300px;
             height: auto;
         }
 
         .recipe-buttons {
-            margin-top: 10px; 
+            margin-top: 10px;
         }
+
+        svg {
+            margin-right: 5px;
+        }
+
     }
 
     .recipe-content {
@@ -88,8 +92,9 @@
             counter-increment: step-counter; // Tăng counter mỗi bước
             margin-bottom: 10px; // Khoảng cách giữa các bước
             word-spacing: 1px;
+
             &:before {
-                content: 'STEP ' counter(step-counter) '. '; // Tạo nội dung cho pseudo-element
+                content: 'BƯỚC ' counter(step-counter) '. '; // Tạo nội dung cho pseudo-element
                 font-weight: bold; // Đặt chữ đậm cho số bước
             }
         }
