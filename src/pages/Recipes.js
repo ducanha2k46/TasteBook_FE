@@ -33,13 +33,10 @@ export default function Recipes() {
 
     const updateSearchHistory = (query) => {
         setSearchHistory(prevHistory => {
-            // Remove the query if it already exists in the history
             const filteredHistory = prevHistory.filter(item => item !== query);
     
-            // Add the query to the top of the history, keeping the history limited to 10 items
             const newHistory = [query, ...filteredHistory].slice(0, 10);
     
-            // Update localStorage
             localStorage.setItem('searchHistory', JSON.stringify(newHistory));
     
             return newHistory;

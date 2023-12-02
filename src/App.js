@@ -17,7 +17,7 @@ import Settings from "./pages/Settings";
 import Recipes from "./pages/Recipes";
 import Login from "./pages/Login";
 import Profile from './pages/Profile';
-
+import RecipeDetail from './pages/RecipeDetail';
 function ScrollToTop() {
   const location = useLocation();  
   useEffect(() => {
@@ -40,6 +40,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/recipes/:id" element={<RecipeDetail />} />
           </Routes>
         </div>
         <Footer />
