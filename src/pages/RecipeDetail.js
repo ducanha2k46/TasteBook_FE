@@ -14,7 +14,7 @@ const RecipeDetail = () => {
     }, [id]);
 
     if (!recipe) {
-        return <div>Loading...</div>; // Hiển thị khi dữ liệu đang được load
+        return <div>Loading...</div>; 
     }
 
     return (
