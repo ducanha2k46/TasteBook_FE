@@ -3,13 +3,12 @@
   padding: 1em;
   border-radius: 5px;
   border-left: .5em solid var(--primary-color);
-  background-color: var(--background-light);
+  // background-color: var(--background-color);
   margin-top: 1em;
-
   gap: 1em;
 
   .title {
-    color: var(--text-color);
+    color: var(--primary-color);
     font-size: 1.75em;
     margin-bottom: .25em;
     font-weight: 700;
@@ -55,6 +54,14 @@
   display: inline-block;
 }
 
+.profile-cooking-info {
+  .saved-recipes {
+    h3 {
+      color: var(--text-color);
+      margin-bottom: 10px;
+    }
+  }
+}
 .btn {
   margin-right: 15px;
 }
@@ -62,6 +69,7 @@
 .logout {
   margin-top: 25px;
 }
+
 .modal {
   position: fixed;
   z-index: 1;

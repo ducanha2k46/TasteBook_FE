@@ -7,10 +7,39 @@ import { toast } from 'react-toastify';
 import ChangePasswordModal from '../components/ChangePasswordModal';
 import DeleteAccountModal from '../components/DeleteAccountModal';
 import EditProfileModal from '../components/EditProfileModal';
-
+import RecipeCard from '../components/RecipesCard';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
+    const [savedRecipes, setSavedRecipes] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchSavedRecipes = async () => {
+            const authToken = localStorage.getItem('userToken');
+
+            try {
+                const response = await fetch(`${apiUrl}/api/recipes/saved-recipes`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setSavedRecipes(data);
+                    console.log('Lấy dữ liệu công thức đã lưu thành công')
+                } else {
+                    console.error('Không thể lấy công thức đã lưu');
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+            }
+        };
+
+        fetchSavedRecipes();
+    }, []);
+
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
 
     const toggleChangePasswordModal = () => {
@@ -22,7 +51,6 @@ export default function Profile() {
         }
     };
 
-    const navigate = useNavigate();
     const { setLoggedIn } = useAuth();
     const [profile, setProfile] = useState({
         firstName: '',
@@ -195,8 +223,18 @@ export default function Profile() {
                         <h2 className='title'>Thông tin nấu ăn</h2>
                     </div>
                     <div className="saved-recipes">
-                        <h4>Công thức đã lưu</h4>
-                        {/* List of recipes the user has saved */}
+                        <h3>Công thức đã lưu</h3>
+                        <div className='recipes-container'>
+                            {savedRecipes.map((recipe, index) => (
+                                // <li key={recipe._id} onClick={() => handleRecipeClick(recipe._id)}>
+                                //     {recipe.name}
+                                //     <CustomImage imgSrc={recipe.image} pt="50%" />
+                                // </li>
+
+                                <RecipeCard key={index} recipe={recipe} />
+
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

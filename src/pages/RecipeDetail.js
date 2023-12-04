@@ -69,7 +69,7 @@ const RecipeDetail = () => {
                 toast.success('Công thức đã được lưu.')
             } else {
                 console.error('Không thể lưu công thức.');
-                toast.error('Không thể lưu công thức.')
+                toast.error('Hãy đăng nhập để lưu công thức.')
             }
         } catch (error) {
             console.error('Có lỗi xảy ra:', error);
