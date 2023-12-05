@@ -177,6 +177,10 @@ export default function Profile() {
     const updateProfile = (updatedProfile) => {
     };
 
+    const handleAuthorClick = (authorName) => {
+        console.log("Navigating to author:", authorName);
+        navigate(`/recipes?author=${encodeURIComponent(authorName)}`);
+    };
     return (
         <div>
             <div className="profile-container ">
@@ -226,18 +230,24 @@ export default function Profile() {
                         <h3>Công thức đã lưu</h3>
                         <div className='recipes-container'>
                             {savedRecipes.map((recipe, index) => (
-                                // <li key={recipe._id} onClick={() => handleRecipeClick(recipe._id)}>
-                                //     {recipe.name}
-                                //     <CustomImage imgSrc={recipe.image} pt="50%" />
-                                // </li>
-
-                                <RecipeCard key={index} recipe={recipe} />
-
+                                <RecipeCard key={index} recipe={recipe} onAuthorClick={handleAuthorClick} />
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div className='profile-container'>
+                <div className="profile">
+                    <div>
+                        <h2 className='title'>Công thức của tôi</h2>
+                    </div>
+                    <div className="saved-recipes">
+                        <button className='btn'>Tạo công thức</button>
+                    </div>
+                </div>
+            </div>
+
             <div className='profile-container'>
                 <div className="account-management ">
                     <h2 className='title'>Quản lý tài khoản</h2>
