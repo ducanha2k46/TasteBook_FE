@@ -12,6 +12,7 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
         password: '',
         birthDate: '',
         gender: '',
+        nickname: ''
     });
 
     // Xử lý khi có sự thay đổi trong input
@@ -19,15 +20,13 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // Hàm xử lý khi form được submit
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Ngăn trang web reload
+        e.preventDefault(); 
         try {
-            // Gửi dữ liệu đến endpoint đăng ký của backend
             const response = await axios.post(`${apiUrl}/api/auth/register`, formData);
             toast.success('Đăng ký thành công!');
             console.log(response.data);
-            closeModal(); // Đóng modal sau khi đăng ký thành công
+            closeModal(); 
         } catch (error) {
             toast.error('Đăng ký thất bại: ' + (error.response && error.response.data.message ? error.response.data.message : 'Lỗi không xác định'));
             console.error('Đăng ký thất bại', error.response.data);
@@ -43,26 +42,38 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
                 <span className="close-btn" onClick={closeModal}>&times;</span>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
+                        <label>Họ</label>
                         <input
                             type="text"
                             name="lastName"
-                            placeholder="Họ"
                             value={formData.lastName}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div className="input-group">
+                        <label>Tên</label>
                         <input
                             type="text"
                             name="firstName"
-                            placeholder="Tên"
                             value={formData.firstName}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div className="input-group">
+                        <label>Biệt danh</label>
+                        <input
+                            type="text"
+                            name="nickname"
+                            placeholder="Tên hiển thị trong công thức của bạn"
+                            value={formData.nickname}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label>Email</label>
                         <input
                             type="email"
                             name="email"
@@ -73,20 +84,21 @@ export default function RegisterModal({ isModalOpen, closeModal }) {
                         />
                     </div>
                     <div className="input-group">
+                        <label>Mật khẩu</label>
                         <input
                             type="password"
                             name="password"
-                            placeholder="Mật khẩu"
+                            placeholder="Tối thiểu 6 ký tự"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div className="input-group">
+                        <label>Ngày sinh</label>
                         <input
                             type="date"
                             name="birthDate"
-                            placeholder="Ngày sinh"
                             value={formData.birthDate}
                             onChange={handleChange}
                             required

@@ -3,7 +3,6 @@
   padding: 1em;
   border-radius: 5px;
   border-left: .5em solid var(--primary-color);
-  // background-color: var(--background-color);
   margin-top: 1em;
   gap: 1em;
 
@@ -58,6 +57,14 @@
   .saved-recipes {
     h3 {
       color: var(--text-color);
+      margin-bottom: 10px;
+    }
+    
+  }
+}
+.profile-user-recipe {
+  .saved-recipes{
+    .btn {
       margin-bottom: 10px;
     }
   }

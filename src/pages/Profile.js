@@ -8,6 +8,7 @@ import ChangePasswordModal from '../components/ChangePasswordModal';
 import DeleteAccountModal from '../components/DeleteAccountModal';
 import EditProfileModal from '../components/EditProfileModal';
 import RecipeCard from '../components/RecipesCard';
+import CreateRecipeModal from '../components/CreateRecipeModal';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function Profile() {
@@ -181,6 +182,26 @@ export default function Profile() {
         console.log("Navigating to author:", authorName);
         navigate(`/recipes?author=${encodeURIComponent(authorName)}`);
     };
+
+    const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+    const [userRecipes, setUserRecipes] = useState([]);
+
+    useEffect(() => {
+        const fetchUserRecipes = async () => {
+            const token = localStorage.getItem('userToken');
+            try {
+                const response = await axios.get(`${apiUrl}/api/recipes/my-recipes`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                setUserRecipes(response.data);
+                console.log('Lấy công thức thành công')
+            } catch (error) {
+                console.error('Lỗi khi lấy công thức:', error.response ? error.response.data : error);
+            }
+        };
+
+        fetchUserRecipes();
+    }, []);
     return (
         <div>
             <div className="profile-container ">
@@ -224,10 +245,9 @@ export default function Profile() {
             <div className='profile-container'>
                 <div className="profile-cooking-info">
                     <div>
-                        <h2 className='title'>Thông tin nấu ăn</h2>
+                        <h2 className='title'>Công thức đã lưu</h2>
                     </div>
                     <div className="saved-recipes">
-                        <h3>Công thức đã lưu</h3>
                         <div className='recipes-container'>
                             {savedRecipes.map((recipe, index) => (
                                 <RecipeCard key={index} recipe={recipe} onAuthorClick={handleAuthorClick} />
@@ -238,15 +258,22 @@ export default function Profile() {
             </div>
 
             <div className='profile-container'>
-                <div className="profile">
+                <div className="profile-user-recipe">
                     <div>
                         <h2 className='title'>Công thức của tôi</h2>
                     </div>
                     <div className="saved-recipes">
-                        <button className='btn'>Tạo công thức</button>
+                        <button className='btn' onClick={() => setCreateModalOpen(true)}>Tạo công thức</button>
+                        <div className='recipes-container'>
+                            {userRecipes && userRecipes.map((recipe,index) => (
+                                <RecipeCard key={index} recipe={recipe} />
+                            ))}
+                        </div>
+
                     </div>
                 </div>
             </div>
+            <CreateRecipeModal isOpen={isCreateModalOpen} onClose={() => setCreateModalOpen(false)} />
 
             <div className='profile-container'>
                 <div className="account-management ">

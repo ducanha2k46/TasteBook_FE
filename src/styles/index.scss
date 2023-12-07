@@ -113,6 +113,19 @@ img {
 @import "partials/editprofile.scss";
 @import "partials/recipedetail.scss";
 
+.create-recipe-modal {
+    .modal-content {
+    width: 90%;
+    max-width: 700px;
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 3rem;
+    }
+}
+
 .option-container {
     box-shadow: 0 5px 10px var(--shadow-color);
     padding: 1em;
@@ -264,7 +277,7 @@ img {
     }
 
     .recipe-detail {
-        display: block; 
+        display: block;
 
         .recipe-image-container,
         .recipe-content {
@@ -275,7 +288,7 @@ img {
         .recipe-image {
             width: 200px;
             height: 200px;
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
         }
 
     }

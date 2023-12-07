@@ -35,7 +35,7 @@ const EditProfileModal = ({ isOpen, onClose, profile }) => {
   const handleSubmit = async () => {
     try {
       const updateData = {
-        nickname, birthDate, biography, gender, firstName, lastName
+         birthDate, biography, gender, firstName, lastName
       };
       const token = localStorage.getItem('userToken');
 
@@ -66,7 +66,7 @@ const EditProfileModal = ({ isOpen, onClose, profile }) => {
           </div>
           <div>
             <label>Biệt danh:</label>
-            <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} />
+            <input type="text" value={nickname} readOnly />
           </div>
           <div>
             <label>Tên:</label>
