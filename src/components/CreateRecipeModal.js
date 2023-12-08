@@ -95,58 +95,79 @@ function CreateRecipeModal({ isOpen, onClose }) {
             <div className="modal">
                 <div className='modal-content'>
                     <h3 className="modal-title">Tạo công thức</h3>
-                    <form onSubmit={handleSubmit}>
-                        <label>Ảnh công thức</label>
-                        <input type="file" accept="image/*" onChange={handleImageChange} />
-                        <label>Tên công thức</label>
-                        <input type="text" name="name" value={recipeData.name} onChange={handleChange} placeholder="Ngắn gọn" />
-                        <label>Mô tả</label>
-                        <textarea name="description" value={recipeData.description} onChange={handleChange} placeholder="10-15 từ"></textarea>
+                    <form onSubmit={handleSubmit} className="recipe-form">
+                        <div className="form-group">
+                            <label>Ảnh công thức</label>
+                            <input type="file" accept="image/*" onChange={handleImageChange} className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Tên công thức</label>
+                            <input type="text" name="name" value={recipeData.name} onChange={handleChange} placeholder="Ngắn gọn" className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Mô tả</label>
+                            <textarea name="description" value={recipeData.description} onChange={handleChange} placeholder="10-15 từ" className="form-control"></textarea>
+                        </div>
                         <label>Nguyên liệu</label>
                         {recipeData.ingredients.map((ingredient, index) => (
-                            <div key={`ingredient-${index}`}>
+                            <div key={`ingredient-${index}`} className="form-group ingredient-group">
                                 <input
                                     type="text"
                                     name={`ingredients-${index}`}
                                     value={ingredient}
                                     onChange={handleChange}
                                     placeholder={`Nguyên liệu ${index + 1}`}
+                                    className="form-control"
                                 />
                                 {index > 0 && (
-                                    <button type="button" onClick={() => handleRemoveField('ingredients', index)}>Xóa</button>
+                                    <button type="button" onClick={() => handleRemoveField('ingredients', index)} className="btn btn-secondary btn-sm">Xóa</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={() => handleAddField('ingredients')}>Thêm Nguyên liệu</button>
-                        <label>Bước</label>
+                        <div className="add-button-container">
+                            <button type="button" onClick={() => handleAddField('ingredients')} className="btn btn-primary btn-sm">Thêm Nguyên liệu</button>
+                        </div>
+                        <label>Cách nấu</label>
                         {recipeData.steps.map((step, index) => (
-                            <div key={`step-${index}`}>
+                            <div key={`step-${index}`} className="form-group step-group">
                                 <textarea
                                     name={`steps-${index}`}
                                     value={step}
                                     onChange={handleChange}
                                     placeholder={`Bước ${index + 1}`}
+                                    className="form-control"
                                 />
                                 {index > 0 && (
-                                    <button type="button" onClick={() => handleRemoveField('steps', index)}>Xóa</button>
+                                    <button type="button" onClick={() => handleRemoveField('steps', index)} className="btn btn-secondary btn-sm">Xóa</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={() => handleAddField('steps')}>Thêm Bước</button>
+                        <div className="add-button-container">
+                            <button type="button" onClick={() => handleAddField('steps')} className="btn btn-primary btn-sm">Thêm Bước</button>
+                        </div>
 
-                        <label>Thời gian chuẩn bị</label>
-                        <input type="text" name="times.Preparation" value={recipeData.times.Preparation} onChange={handleChange} />
-                        <label>Thời gian nấu</label>
-                        <input type="text" name="times.Cooking" value={recipeData.times.Cooking} onChange={handleChange} />
-                        <label>Độ khó</label>
-                        <input type="text" name="difficult" value={recipeData.difficult} onChange={handleChange} placeholder="Độ khó" />
+                        <div className="form-group">
+                            <label>Thời gian chuẩn bị</label>
+                            <input type="text" name="times.Preparation" value={recipeData.times.Preparation} onChange={handleChange} className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Thời gian nấu</label>
+                            <input type="text" name="times.Cooking" value={recipeData.times.Cooking} onChange={handleChange} className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Độ khó</label>
+                            <input type="text" name="difficult" value={recipeData.difficult} onChange={handleChange} placeholder="Độ khó" className="form-control" />
+                        </div>
 
-                        <button type="submit" className='btn'>Đăng Công Thức</button>
-                        <button onClick={onClose} className='btn'>Đóng</button>
+                        <div className="form-actions">
+                            <button type="submit" className='btn '>Đăng Công Thức</button>
+                            <button onClick={onClose} className='btn '>Đóng</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
+
     );
 }
 

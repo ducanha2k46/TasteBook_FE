@@ -112,19 +112,8 @@ img {
 @import "partials/repices-section.scss";
 @import "partials/editprofile.scss";
 @import "partials/recipedetail.scss";
+@import "partials/create-recipe-modal.scss";
 
-.create-recipe-modal {
-    .modal-content {
-    width: 90%;
-    max-width: 700px;
-    background-color: var(--background-color);
-    padding: 2rem;
-    border-radius: 10px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    margin-top: 3rem;
-    }
-}
 
 .option-container {
     box-shadow: 0 5px 10px var(--shadow-color);
