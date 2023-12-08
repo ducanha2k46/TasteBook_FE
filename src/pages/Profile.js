@@ -202,6 +202,23 @@ export default function Profile() {
 
         fetchUserRecipes();
     }, []);
+    const handleDeleteRecipe = async (recipeId) => {
+        const isConfirmed = window.confirm('Bạn có chắc chắn muốn xóa công thức này không?');
+        if (isConfirmed) {
+
+            try {
+                const token = localStorage.getItem('userToken');
+                await axios.delete(`${apiUrl}/api/recipes/delete/${recipeId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                setUserRecipes(userRecipes.filter(recipe => recipe._id !== recipeId));
+                toast.success('Công thức đã được xóa');
+            } catch (error) {
+                console.error('Lỗi khi xóa công thức:', error);
+                toast.error('Lỗi khi xóa công thức');
+            }
+        }
+    };
     return (
         <div>
             <div className="profile-container ">
@@ -265,11 +282,18 @@ export default function Profile() {
                     <div className="saved-recipes">
                         <button className='btn' onClick={() => setCreateModalOpen(true)}>Tạo công thức</button>
                         <div className='recipes-container'>
-                            {userRecipes && userRecipes.map((recipe,index) => (
-                                <RecipeCard key={index} recipe={recipe} />
+                            {userRecipes && userRecipes.map((recipe, index) => (
+                                <div key={index} className="recipe-item">
+                                    <RecipeCard recipe={recipe} />
+                                    <button
+                                        className='delete-btn'
+                                        onClick={() => handleDeleteRecipe(recipe._id)}
+                                    >
+                                        Xóa
+                                    </button>
+                                </div>
                             ))}
                         </div>
-
                     </div>
                 </div>
             </div>
