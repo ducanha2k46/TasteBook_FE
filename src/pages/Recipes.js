@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from "../components/RecipesCard";
 import PreviousSearches from "../components/PreviousSearches";
-import axios from 'axios'; 
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -87,9 +88,61 @@ export default function Recipes() {
     const handleAuthorClick = (author) => {
         setSelectedAuthor(author);
     };
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedImage(file);
+
+            // Tạo URL preview
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const [displayNames, setDisplayNames] = useState([]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', selectedImage);
+
+        try {
+            const response = await axios.post(`${apiUrl}/api/recipes/analyze-image`, formData);
+            console.log(response.data);
+            setDisplayNames(response.data.displayNames);
+            toast.success('Phân tích thành công')
+        } catch (error) {
+            console.error('Lỗi khi phân tích ảnh:', error);
+            toast.error('Ảnh cần có định dạng png hoặc jpg.')
+        }
+    };
     return (
         <div>
             <PreviousSearches searches={searchHistory} onSearch={handleSearch} onDelete={handleDeleteSearchItem} />
+            <div className='analyze-image-container'>
+                <h2 className='analyze-title'>Tìm thành phần món ăn qua hình ảnh</h2>
+                <form onSubmit={handleSubmit} className='analyze-form'>
+                    <input type="file" onChange={handleImageChange} className='file-input' />
+                    <button type="submit" className='btn'>Phân Tích Ảnh Món Ăn</button>
+                </form>
+                {imagePreview && (
+                    <div className='image-preview-container'>
+                        <img src={imagePreview} alt="Preview" className='image-preview' />
+                    </div>
+                )}
+                <ul className='display-names-list'>
+                    {displayNames.map((name, index) => (
+                        <li key={index} className='display-name'>{name}</li>
+                    ))}
+                </ul>
+            </div>
+
             <div className="recipes-container">
                 {recipes.map((recipe, index) => (
                     <RecipeCard key={index} recipe={recipe} onAuthorClick={handleAuthorClick} />

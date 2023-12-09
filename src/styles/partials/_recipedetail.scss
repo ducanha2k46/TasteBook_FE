@@ -56,18 +56,18 @@
     }
 
     ul {
-        list-style-type: none; // Xóa dấu bullet list
-        padding: 0; // Xóa padding mặc định
+        list-style-type: none; 
+        padding: 0; 
 
         li {
             color: var(--text-color);
-            padding: 5px 0; // Thêm padding cho mỗi mục
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1); // Dòng kẻ mờ dưới mỗi mục
+            padding: 5px 0; 
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
             margin-top: 10px;
             margin-bottom: 10px;
 
             &:last-child {
-                border-bottom: none; // Xóa dòng kẻ cho mục cuối cùng
+                border-bottom: none; 
             }
         }
     }
@@ -82,20 +82,20 @@
     }
 
     ol {
-        counter-reset: step-counter; // Khởi tạo counter
-        list-style-type: none; // Xóa style mặc định của danh sách
+        counter-reset: step-counter; 
+        list-style-type: none; 
         padding: 0;
 
         li {
             color: var(--text-color);
             font-size: 16px;
-            counter-increment: step-counter; // Tăng counter mỗi bước
-            margin-bottom: 10px; // Khoảng cách giữa các bước
+            counter-increment: step-counter; 
+            margin-bottom: 10px; 
             word-spacing: 1px;
 
             &:before {
-                content: 'BƯỚC ' counter(step-counter) '. '; // Tạo nội dung cho pseudo-element
-                font-weight: bold; // Đặt chữ đậm cho số bước
+                content: 'BƯỚC ' counter(step-counter) '. '; 
+                font-weight: bold; 
             }
         }
     }

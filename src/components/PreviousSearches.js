@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import axios from 'axios'; // Ensure axios is installed
+import axios from 'axios'; 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function PreviousSearches({ onSearch, searches, onDelete }) {

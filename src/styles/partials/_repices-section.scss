@@ -1,20 +1,76 @@
-
-.recipes-container{
+.recipes-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     grid-gap: 1.5em;
 }
-.recipe-card{
+
+.analyze-image-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--background-light);
+    box-shadow: 0 2px 6px var(--shadow-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    .analyze-title {
+        color: var(--text-color);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .analyze-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .file-input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .image-preview-container {
+        margin-top: 20px;
+        text-align: center;
+
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--shadow-color);
+            border-radius: 8px;
+        }
+    }
+
+    .display-names-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+
+        .display-name {
+            background-color: var(--background-light);
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+    }
+}
+
+
+.recipe-card {
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 5px 10px var(--shadow-color);
-    .recipe-card-info{
+
+    .recipe-card-info {
         padding: 15px;
     }
-    .custom-image{
+
+    .custom-image {
         z-index: -1;
     }
-    .auther-img{
+
+    .auther-img {
         height: 60px;
         width: 60px;
         border-radius: 50%;
@@ -23,19 +79,22 @@
         z-index: 2;
         margin-top: -50px;
     }
-    .recipe-title{
+
+    .recipe-title {
         font-size: 1.25em;
         font-weight: bold;
         margin-bottom: .5em;
         color: var(--text-color);
         margin-top: .25em;
     }
-    .recipe-desc{
+
+    .recipe-desc {
         color: var(--text-light);
         font-size: .9em;
         letter-spacing: 1px;
     }
-    .view-btn{
+
+    .view-btn {
         font-size: 1em;
         font-weight: bold;
         color: var(--primary-color);
